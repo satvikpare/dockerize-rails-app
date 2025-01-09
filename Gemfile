@@ -64,3 +64,4 @@ end
 
 
 gem "dotenv"
+gem "pg"

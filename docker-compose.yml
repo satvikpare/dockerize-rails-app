@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+  app:
+    build: 
+      context: .
+    container_name: rails-container
+    command: rails server -b 0.0.0.0
+    ports:
+    - "3000:3000"
+    environment:
+      RAILS_ENV: development
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+    networks:
+      - new-network
+
+  db:
+    image: postgres:latest
+    container_name: postgres-container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: myapp_development
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - new-network
+  
+volumes:
+  postgres_data:
+
+networks:
+  new-network:
